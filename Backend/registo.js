@@ -1,5 +1,5 @@
 async function start() {
-    document.getElementById("form").onsubmit = handleFormRequest;
+    document.getElementById("form").onsubmit = handleFormRequest();
 }
 
 async function handleFormRequest(evt) {
@@ -13,7 +13,7 @@ async function handleFormRequest(evt) {
     try {
         await Auth.register(formData); 
 
-        window.location.replace("../login/login.html"); 
+        window.location.replace("../login.html"); 
     } catch (e) {
         if (e.cause && e.cause.status === 422) {
             const errors = await e.cause.json();

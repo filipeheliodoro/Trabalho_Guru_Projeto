@@ -1,6 +1,6 @@
 
 async function start() {
-    document.getElementById("form").onsubmit = handleFormRequest
+    document.getElementById("form").onsubmit = handleFormRequest;
 }
 
 async function handleFormRequest(evt) {
@@ -10,20 +10,20 @@ async function handleFormRequest(evt) {
 
     errorElement.innerText = "";
 
-    const formData = new FormData(this);
+    const formData = new FormData(evt.target);
 
     try {
         // Faz login e armazena o estado no localStorage
         await Auth.login(formData);
 
-        // Salvar ID de usuário ou qualquer outra informação necessária no localStorage
+        // Salvar ID de utilizador ou qualquer outra informação necessária no localStorage
         localStorage.setItem('userLoggedIn', true);
 
-        window.location.replace("../principal/dittodex.html");
+        window.location.replace("../pesquisa.html");
     } catch (e) {
-        if (e.cause.status == 422) {
+        if (e.cause && e.cause.status === 422) {
             const errors = await e.cause.json();
-            errorElement.innerText = errors.credentials;
+            errorElement.innerText = errors.credentials || "Invalid credentials.";
         }
 
         throw e;
